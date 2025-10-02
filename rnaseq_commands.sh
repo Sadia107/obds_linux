@@ -37,4 +37,4 @@ $ squeue –me
 $ watch squeue –me
 $ less 565_slurm_template.sh.err
 less 565_slurm_template.sh.out
-
+good :)
