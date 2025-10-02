@@ -37,4 +37,23 @@ $ squeue –me
 $ watch squeue –me
 $ less 565_slurm_template.sh.err
 less 565_slurm_template.sh.out
+#Running HISAT2 to map reads
+$ cd /project/immd0811/linux/2_rnaseq/3_analysis
+create a new directory:
+$ mkdir 2_hisat
+$ cp /project/shared/linux/4_slurm/slurm_template.sh .
+$ nano slurm_template.sh
+On nano:
+hisat2 --threads 8 /project/shared/linux/5_rnaseq/hisat2_index/grcm39 \
+-1 /project/immd0811/linux/2_rnaseq/1_fastq/cd8_rep3_read1.fastq.gz \
+-2 /project/immd0811/linux/2_rnaseq/1_fastq/cd8_rep3_read2.fastq.gz \
+--rna-strandness RF \
+--summary-file /project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/stats.txt \
+-S /project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/aln-pe.sam
+Save and exit
+$ sbatch slurm_template.sh
+$ watch squeue --me
+$ less 613_slurm_template.sh.err
+$ less 613_slurm_template.sh.out
+completed on 02/10/2025
 good :)
