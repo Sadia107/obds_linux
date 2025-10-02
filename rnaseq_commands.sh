@@ -22,4 +22,4 @@ $ scp
 $ pwd
 $ cd /c/Users/immd0811/Downloads
 $ scp obds:/project/immd0811/linux/2_rnaseq/3_analysis/reports/multiqc_report.html .
-
+ done on 02/10/25
