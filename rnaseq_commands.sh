@@ -113,3 +113,5 @@ $ scp obds:/project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/counts_report/mul
 Save both .bam and .bam.bai files in the same folder
 Then on the IGV website change the genome to genome of interest, then on the track select both the .bam and .bam.bai folder.
 tasks completed 03/10/2025 :)
+#additional test using picard commands
+$ picard CollectAlignmentSummaryMetrics -O /project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/CollectAlignmentSummaryMetrics.txt -I /project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/sorted.bam
