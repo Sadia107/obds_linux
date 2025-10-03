@@ -57,3 +57,59 @@ $ less 613_slurm_template.sh.err
 $ less 613_slurm_template.sh.out
 completed on 02/10/2025
 good :)
+
+#Day 5 03/10/2025
+#Mapping and qunatification
+#Use SAMtools to generate mapping QC
+#You can convert your SAM to BAM and sort in the same step
+#Index BAM file
+Created a new script called sam_template.sh with instructions as follows:
+samtools view -b /project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/aln-pe.sam | samtools sort > /project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/sorted.bam
+samtools index sorted.bam Save exit 
+$ sbatch sam_template.sh
+$ watch squeue –me
+To download the index BAM file:
+In a different terminal (don’t log in)
+$ scp
+$ pwd
+$ cd /c/Users/immd0811/Downloads
+$ scp obds:/project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/sorted.bam .
+# Run samtools flagstat
+$ samtools flagstats sorted.bam > sorted.flagstat
+# Run samtools idxstats
+$ samtools idxstats sorted.bam > sorted.idxstats
+#Use MultiQC to visualise mapping QC
+Created a new folder called mapping_reports in the 2_hisat folder using:
+$ mkdir mapping_reports
+then 
+$ cd mapping_reports
+$ multiqc /project/immd0811/linux/2_rnaseq/3_analysis/2_hisat
+On a new terminal:
+$ scp
+$ pwd
+$ cd /c/Users/immd0811/Downloads
+$ scp obds:/project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/mapping_reports/multiqc_report.html .
+#Run featureCounts to generate a count matrix
+#Read the manual to find the necessary parameters
+#Remember this is stranded data
+#Submit as a job to the cluster
+Created a new script called job_script.sh using 
+Touch job_scriot.sh
+Then in the script:
+featureCounts -t exon -g gene_id -p --countReadPairs -a /project/immd0811/linux/2_rnaseq/2_genome/Mus_musculus.GRCm39.115.gtf.gz -o counts.txt \
+/project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/sorted.bamSave and exit 
+$ sbatch job_script.sh
+$ watch squeue –me
+#Use MultiQC to visualise quantification QC
+$ mkdir counts_report
+$ cd counts_report
+$ multiqc /project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/counts.txt
+On a new terminal:
+$ scp
+$ pwd
+$ cd /c/Users/immd0811/Downloads
+$ scp obds:/project/immd0811/linux/2_rnaseq/3_analysis/2_hisat/counts_report/multiqc_report.html .
+#Visualise BAM file with IGV on your laptop
+Save both .bam and .bam.bai files in the same folder
+Then on the IGV website change the genome to genome of interest, then on the track select both the .bam and .bam.bai folder.
+tasks completed 03/10/2025 :)
